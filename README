@@ -1,0 +1,57 @@
+README for Module::Depends 0.01
+
+=head1 NAME
+
+Module::Depends - identify the dependencies of a distribution
+
+=head1 SYNOPSIS
+
+ use YAML;
+ use Module::Depends;
+ my $deps = Module::Depends->new->dist_dir( '.' )->find_modules;
+ print "Our dependencies:\n", Dump { $depends->requires };
+
+
+=head1 DEPENDENCIES
+
+This module has external dependencies on the following modules:
+
+ Class::Accessor::Chained
+ YAML
+
+=head1 INSTALLATION
+
+ perl Build.PL
+ perl Build test
+
+and if all goes well
+
+ perl Build install
+
+=head1 HISTORY
+
+What changed over the last 3 revisions
+
+=over
+
+=item 0.01	Thursday 22nd January 2004
+
+	Initial CPAN release
+=back
+
+=head1 AUTHOR
+
+Richard Clamp, based on code extracted from the Fotango build system
+originally by James Duncan and Arthur Bergman.
+
+=head1 COPYRIGHT
+
+Copyright 2004 Fotango.  All Rights Reserved.
+
+This module is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 SEE ALSO
+
+L<Module::Depends::Intrusive>
+

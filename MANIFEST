@@ -1,0 +1,12 @@
+Changes
+Build.PL
+lib/Module/Depends.pm
+lib/Module/Depends/Intrusive.pm
+Makefile.PL
+README
+MANIFEST
+MANIFEST.SKIP
+META.yml
+t/depends.t
+t/mmish/Makefile.PL
+t/empty/.exists
