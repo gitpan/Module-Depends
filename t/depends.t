@@ -1,6 +1,6 @@
 #!perl -w
 use strict;
-use Test::More tests => 12;
+use Test::More tests => 13;
 my $class = 'Module::Depends::Intrusive';
 require_ok( "Module::Depends" );
 require_ok( $class );
@@ -46,6 +46,11 @@ is_deeply( $versioned->requires,
 my $shy = Module::Depends->new->dist_dir( '.' )->find_modules;
 is_deeply( $shy->requires, $our_requires,
            "got our own requires, non-intrusively" );
+
+my $distant = Module::Depends->new->dist_dir( 't/with-yaml' )->find_modules;
+is_deeply( $distant->requires, $our_requires,
+           "got our own requires, non-intrusively, from a distance" );
+
 
 
 my $inline_mm = $class->new->dist_dir('t/inline-makemaker')->find_modules;

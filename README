@@ -1,4 +1,4 @@
-README for Module::Depends 0.04
+README for Module::Depends 0.07
 
 =head1 NAME
 
@@ -9,7 +9,7 @@ Module::Depends - identify the dependencies of a distribution
  use YAML;
  use Module::Depends;
  my $deps = Module::Depends->new->dist_dir( '.' )->find_modules;
- print "Our dependencies:\n", Dump { $depends->requires };
+ print "Our dependencies:\n", Dump $deps->requires;
 
 
 =head1 DEPENDENCIES
@@ -36,25 +36,20 @@ What changed over the last 3 revisions
 
 =over
 
-=item 0.04 Wednesday 19th May, 2004
+=item 0.07 Friday 18th February, 2005
 
-	Supply a dummy $VERSION for our fake Module::Build
-
-
-=item 0.03 Friday 23rd January, 2004
-
-	The "Oh damnit, MakeMaker.pm was subtly different to
-	ModuleBuild.pm" release.  Changes from gutting Fotango::Build.
-
-	Modified the fakeout of Module::Build
-	On failure methods now set ->error rather than croaking
+	Fixed the relative, non-intrusive case (I forgot we went to
+	chdiring all over the shop)
 
 
-=item 0.02 Friday 23rd January, 2004
+=item 0.06 Tuesday 14th September, 2004
 
-	NINJA compilance
-	<environment barbie> Chdir is hard!  Uses File::chdir to
-	dynamically change back to where we started </>
+	Rewrote source code example in synopsis so it works
+
+
+=item 0.05 Thursday 17th June, 2004
+
+	Dummy out Inline::MakeMaker too
 
 =back
 

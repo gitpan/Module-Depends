@@ -5,7 +5,7 @@ use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
 use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
-our $VERSION = '0.05';
+our $VERSION = '0.07';
 
 =head1 NAME
 
@@ -16,7 +16,7 @@ Module::Depends - identify the dependencies of a distribution
  use YAML;
  use Module::Depends;
  my $deps = Module::Depends->new->dist_dir( '.' )->find_modules;
- print "Our dependencies:\n", Dump { $depends->requires };
+ print "Our dependencies:\n", Dump $deps->requires;
 
 =head1 DESCRIPTION
 
@@ -71,7 +71,7 @@ sub find_modules {
 sub _find_modules {
     my $self = shift;
 
-    my $file = File::Spec->catdir( $self->dist_dir, 'META.yml' );
+    my $file = 'META.yml';
     if (-e $file) {
         my $meta = LoadFile( $file );
         $self->requires( $meta->{requires} );

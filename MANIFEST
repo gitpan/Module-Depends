@@ -13,3 +13,4 @@ t/mmish/Makefile.PL
 t/empty/.exists
 t/build_version/Build.PL
 t/inline-makemaker/Makefile.PL
+t/with-yaml/META.yml
