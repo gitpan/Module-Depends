@@ -34,13 +34,23 @@ sub _find_modules {
         bless {}, "Module::Depends::Intrusive::Fake::Module::Build";
     };
     local *Module::Build::subclass = sub { 'Module::Build' };
-    local *main::WriteMakefile;
-    local *ExtUtils::MakeMaker::WriteMakefile = sub {
+    local $Module::Build::VERSION = 666;
+
+    my $WriteMakefile = sub {
         my %args = @_;
         $self->requires( $args{PREREQ_PM} || {} );
         1;
     };
-    local $Module::Build::VERSION = 666;
+    local *main::WriteMakefile;
+    local *ExtUtils::MakeMaker::WriteMakefile = $WriteMakefile;
+
+    local $INC{"Inline/MakeMaker.pm"} = 1;
+
+    local @Inline::MakeMaker::EXPORT = qw( WriteMakefile WriteInlineMakefile );
+    local @Inline::MakeMaker::ISA = qw( Exporter );
+    local *Inline::MakeMaker::WriteMakefile = $WriteMakefile;
+    local *Inline::MakeMaker::WriteInlineMakefile = $WriteMakefile;
+
 
     my $file = File::Spec->catfile( getcwd(), $pl );
     eval {

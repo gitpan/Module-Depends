@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Module-Depends
-version: 0.04
+version: 0.05
 author:
   - |-
     Richard Clamp, based on code extracted from the Fotango build system
@@ -19,7 +19,7 @@ conflicts: {}
 provides:
   Module::Depends:
     file: lib/Module/Depends.pm
-    version: 0.04
+    version: 0.05
   Module::Depends::Intrusive:
     file: lib/Module/Depends/Intrusive.pm
   Module::Depends::Intrusive::Fake::Module::Build:

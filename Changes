@@ -1,3 +1,6 @@
+0.05 Thursday 17th June, 2004
+	Dummy out Inline::MakeMaker too
+
 0.04 Wednesday 19th May, 2004
 	Supply a dummy $VERSION for our fake Module::Build
 
