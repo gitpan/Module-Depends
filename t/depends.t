@@ -1,6 +1,6 @@
 #!perl -w
 use strict;
-use Test::More tests => 10;
+use Test::More tests => 11;
 my $class = 'Module::Depends::Intrusive';
 require_ok( "Module::Depends" );
 require_ok( $class );
@@ -36,6 +36,12 @@ like( $notthere->error, qr{^couldn't chdir to t/no-such-dir: }, "fails on not ex
 
 $notthere->dist_dir( 't/empty' )->find_modules;
 like(  $notthere->error, qr{^No {Build,Makefile}.PL found }, "fails on empty dir" );
+
+my $versioned = $class->new->dist_dir('t/build_version')->find_modules;
+is_deeply( $versioned->requires,
+           { 'Class::MethodMaker' => '1.02',
+             'Term::ReadKey'      => '2.14' },
+           "use Module::Build VERSION; no longer trips us up" );
 
 my $shy = Module::Depends->new->dist_dir( '.' )->find_modules;
 is_deeply( $shy->requires, $our_requires,

@@ -40,10 +40,13 @@ sub _find_modules {
         $self->requires( $args{PREREQ_PM} || {} );
         1;
     };
+    local $Module::Build::VERSION = 666;
 
     my $file = File::Spec->catfile( getcwd(), $pl );
     eval {
         package main;
+        no strict;
+        no warnings;
         require "$file";
     };
     $self->error( $@ ) if $@;

@@ -1,4 +1,4 @@
-README for Module::Depends 0.03
+README for Module::Depends 0.04
 
 =head1 NAME
 
@@ -36,6 +36,11 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.04 Wednesday 19th May, 2004
+
+	Supply a dummy $VERSION for our fake Module::Build
+
+
 =item 0.03 Friday 23rd January, 2004
 
 	The "Oh damnit, MakeMaker.pm was subtly different to
@@ -51,10 +56,6 @@ What changed over the last 3 revisions
 	<environment barbie> Chdir is hard!  Uses File::chdir to
 	dynamically change back to where we started </>
 
-
-=item 0.01 Thursday 22nd January, 2004
-
-	Initial CPAN release
 =back
 
 =head1 AUTHOR
