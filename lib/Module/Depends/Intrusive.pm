@@ -1,16 +1,22 @@
 use strict;
 package Module::Depends::Intrusive;
 use base qw( Module::Depends );
-use Carp qw( croak );
 use Cwd qw( getcwd );
 use ExtUtils::MakeMaker ();
 
 sub _find_modules {
     my $self = shift;
 
+    # this order is important, as when a Makefile.PL and Build.PL are
+    # present, the Makefile.PL could just be a passthrough
+    my $pl = -e 'Build.PL' ? 'Build.PL' : -e 'Makefile.PL' ? 'Makefile.PL' : 0;
+    unless ($pl) {
+        $self->error( 'No {Build,Makefile}.PL found in '.$self->dist_dir );
+        return $self;
+    }
+
     # fake up Module::Build and ExtUtils::MakeMaker
     no warnings 'redefine';
-    local $INC{"Module/Build.pm"} = 1;
     local *STDIN; # run non-interactive
     local *ExtUtils::Liblist::ext = sub {
         my ($class, $lib) = @_;
@@ -18,37 +24,36 @@ sub _find_modules {
         push @{ $self->libs }, $lib;
         return 1;
     };
-    local *CORE::GLOBAL::exit = sub { goto _exit };
+    local *CORE::GLOBAL::exit = sub { };
+    local $INC{"Module/Build.pm"} = 1;
     local *Module::Build::new = sub {
         my $class = shift;
         my %args =  @_;
         $self->requires( $args{requires} || {} );
         $self->build_requires( $args{build_requires} || {} );
-        goto _exit;
+        bless {}, "Module::Depends::Intrusive::Fake::Module::Build";
     };
-    local *Module::Build::create_build_script = sub { 1 };
+    local *Module::Build::subclass = sub { 'Module::Build' };
     local *main::WriteMakefile;
     local *ExtUtils::MakeMaker::WriteMakefile = sub {
-      my %args = @_;
-      $self->requires( $args{PREREQ_PM} || {} );
-      goto _exit;
+        my %args = @_;
+        $self->requires( $args{PREREQ_PM} || {} );
+        1;
     };
 
-    # this order is important, as when a Makefile.PL and Build.PL are
-    # present, the Makefile.PL could just be a passthrough
-    my $pl = -e 'Build.PL' ? 'Build.PL' : -e 'Makefile.PL' ? 'Makefile.PL' :
-      croak "No {Build,Makefile}.PL found in '".$self->dist_dir."'\n";
     my $file = File::Spec->catfile( getcwd(), $pl );
-
     eval {
         package main;
         require "$file";
-      _exit:
     };
+    $self->error( $@ ) if $@;
     delete $INC{$file};
-    die $@ if $@;
     return $self;
 }
+
+package Module::Depends::Intrusive::Fake::Module::Build;
+sub DESTROY {}
+sub AUTOLOAD { shift }
 
 1;
 

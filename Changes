@@ -1,4 +1,11 @@
-0.01 Friday 23rd January, 2004
+0.03 Friday 23rd January, 2004
+	The "Oh damnit, MakeMaker.pm was subtly different to
+	ModuleBuild.pm" release.  Changes from gutting Fotango::Build.
+
+	Modified the fakeout of Module::Build
+	On failure methods now set ->error rather than croaking
+
+0.02 Friday 23rd January, 2004
 	NINJA compilance
 	<environment barbie> Chdir is hard!  Uses File::chdir to
 	dynamically change back to where we started </>

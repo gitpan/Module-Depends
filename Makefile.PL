@@ -10,9 +10,9 @@ WriteMakefile
    INSTALLDIRS  => 'site',
    PREREQ_PM    => {
 		    'File::chdir' => '0',
-		    'Class::Accessor::Chained' => '0',
-		    'YAML' => '0',
-		    'Test::More' => '0',
 		    'File::Spec' => '0',
+		    'Class::Accessor::Chained' => '0',
+		    'Test::More' => '0',
+		    'YAML' => '0',
 		   },
   );

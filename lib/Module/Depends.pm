@@ -1,12 +1,11 @@
 use strict;
 package Module::Depends;
-use Carp qw( croak );
 use YAML qw( LoadFile );
 use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
 use File::chdir;
-__PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires ));
-our $VERSION = '0.02';
+__PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -44,6 +43,7 @@ sub new {
         libs           => [],
         requires       => {},
         build_requires => {},
+        error          => '',
     });
 }
 
@@ -62,10 +62,9 @@ sub find_modules {
 
     my $going_to = File::Spec->rel2abs( $self->dist_dir );
     local $CWD = $going_to;
-    croak "couldn't chdir to " . $self->dist_dir . ": $!"
-      unless $CWD eq $going_to;
-
-    $self->_find_modules;
+    $CWD eq $going_to
+     ? $self->_find_modules
+     : $self->error( "couldn't chdir to " . $self->dist_dir . ": $!" );
     return $self;
 }
 
@@ -77,6 +76,9 @@ sub _find_modules {
         my $meta = LoadFile( $file );
         $self->requires( $meta->{requires} );
         $self->build_requires( $meta->{build_requires} );
+    }
+    else {
+        $self->error( "No META.yml found in ". $self->dist_dir );
     }
     return $self;
 }
@@ -98,6 +100,10 @@ distribution.
 
 A reference to a hash enumerating the modules needed to build the
 distribution.
+
+=head2 error
+
+A reason, if any, for failing to get dependencies.
 
 =head1 AUTHOR
 
