@@ -4,8 +4,9 @@ use Carp qw( croak );
 use YAML qw( LoadFile );
 use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
+use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires ));
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 NAME
 
@@ -59,19 +60,21 @@ scan the C<dist_dir> to populate C<libs>, C<requires>, and C<build_requires>
 sub find_modules {
     my $self = shift;
 
-    my $dir = getcwd();
-    chdir $self->dist_dir
-      or croak "couldn't chdir to " . $self->dist_dir . ": $!";
+    my $going_to = File::Spec->rel2abs( $self->dist_dir );
+    local $CWD = $going_to;
+    croak "couldn't chdir to " . $self->dist_dir . ": $!"
+      unless $CWD eq $going_to;
+
     $self->_find_modules;
-    chdir $dir;
     return $self;
 }
 
 sub _find_modules {
     my $self = shift;
 
-    if (-e 'META.yml') {
-        my $meta = LoadFile('META.yml');
+    my $file = File::Spec->catdir( $self->dist_dir, 'META.yml' );
+    if (-e $file) {
+        my $meta = LoadFile( $file );
         $self->requires( $meta->{requires} );
         $self->build_requires( $meta->{build_requires} );
     }

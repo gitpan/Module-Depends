@@ -1,2 +1,7 @@
-0.01	Thursday 22nd January 2004
+0.01 Friday 23rd January, 2004
+	NINJA compilance
+	<environment barbie> Chdir is hard!  Uses File::chdir to
+	dynamically change back to where we started </>
+
+0.01 Thursday 22nd January, 2004
 	Initial CPAN release

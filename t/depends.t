@@ -4,18 +4,21 @@ use Test::More tests => 9;
 my $class = 'Module::Depends::Intrusive';
 require_ok( "Module::Depends" );
 require_ok( $class );
-use Cwd qw( getcwd );
-my $start = getcwd();
+
+# when you edit Build.PL, edit this, then rerun
+# perl Build.PL ; ./Build distmeta
+my $our_requires = {
+    'Class::Accessor::Chained' => 0,
+    'File::chdir' => 0,
+    'File::Spec' => 0,
+    'YAML' => 0,
+};
 
 # test against ourself
-my $mb = $class->new->dist_dir( $start )->find_modules;
+my $mb = $class->new->dist_dir( '.' )->find_modules;
 isa_ok( $mb, $class );
 
-is_deeply( $mb->requires,
-           { 'Class::Accessor::Chained' => 0,
-             'YAML' => 0,
-           },
-           "got our own requires" );
+is_deeply( $mb->requires, $our_requires, "got our own requires" );
 
 is_deeply( $mb->build_requires,
            { 'Test::More' => 0 },
@@ -36,10 +39,7 @@ eval { $notthere->find_modules };
 like( $@, qr{^No {Build,Makefile}.PL found }, "fails on empty dir" );
 
 
-my $shy = Module::Depends->new->dist_dir($start)->find_modules;
-is_deeply( $shy->requires,
-           { 'Class::Accessor::Chained' => 0,
-             'YAML' => 0,
-           },
+my $shy = Module::Depends->new->dist_dir( '.' )->find_modules;
+is_deeply( $shy->requires, $our_requires,
            "got our own requires, non-intrusively" );
 

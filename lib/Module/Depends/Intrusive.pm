@@ -2,6 +2,7 @@ use strict;
 package Module::Depends::Intrusive;
 use base qw( Module::Depends );
 use Carp qw( croak );
+use Cwd qw( getcwd );
 use ExtUtils::MakeMaker ();
 
 sub _find_modules {
@@ -23,27 +24,28 @@ sub _find_modules {
         my %args =  @_;
         $self->requires( $args{requires} || {} );
         $self->build_requires( $args{build_requires} || {} );
-        return bless {}, 'Module::Build';
+        goto _exit;
     };
     local *Module::Build::create_build_script = sub { 1 };
     local *main::WriteMakefile;
     local *ExtUtils::MakeMaker::WriteMakefile = sub {
       my %args = @_;
       $self->requires( $args{PREREQ_PM} || {} );
-      return 1;
+      goto _exit;
     };
 
     # this order is important, as when a Makefile.PL and Build.PL are
     # present, the Makefile.PL could just be a passthrough
-    my $file = -e 'Build.PL' ? 'Build.PL' : -e 'Makefile.PL' ? 'Makefile.PL' :
+    my $pl = -e 'Build.PL' ? 'Build.PL' : -e 'Makefile.PL' ? 'Makefile.PL' :
       croak "No {Build,Makefile}.PL found in '".$self->dist_dir."'\n";
-    $file = $self->dist_dir . "/$file";
+    my $file = File::Spec->catfile( getcwd(), $pl );
+
     eval {
         package main;
         require "$file";
       _exit:
-        delete $INC{$file};
     };
+    delete $INC{$file};
     die $@ if $@;
     return $self;
 }

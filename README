@@ -1,4 +1,4 @@
-README for Module::Depends 0.01
+README for Module::Depends 0.02
 
 =head1 NAME
 
@@ -17,6 +17,8 @@ Module::Depends - identify the dependencies of a distribution
 This module has external dependencies on the following modules:
 
  Class::Accessor::Chained
+ File::Spec
+ File::chdir
  YAML
 
 =head1 INSTALLATION
@@ -34,7 +36,14 @@ What changed over the last 3 revisions
 
 =over
 
-=item 0.01	Thursday 22nd January 2004
+=item 0.01 Friday 23rd January, 2004
+
+	NINJA compilance
+	<environment barbie> Chdir is hard!  Uses File::chdir to
+	dynamically change back to where we started </>
+
+
+=item 0.01 Thursday 22nd January, 2004
 
 	Initial CPAN release
 =back
