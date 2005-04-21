@@ -5,7 +5,7 @@ use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
 use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 =head1 NAME
 
@@ -60,7 +60,9 @@ scan the C<dist_dir> to populate C<libs>, C<requires>, and C<build_requires>
 sub find_modules {
     my $self = shift;
 
-    my $going_to = File::Spec->rel2abs( $self->dist_dir );
+    my $going_to = Cwd::realpath(
+      File::Spec->rel2abs( $self->dist_dir ) );
+
     local $CWD = $going_to;
     $CWD eq $going_to
      ? $self->_find_modules

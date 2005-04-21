@@ -1,3 +1,7 @@
+0.08 Thursday 21st April, 2005
+	Make use of Cwd::realpath to normalise paths with relative 
+	components in them. (Tom Insam)
+
 0.07 Friday 18th February, 2005
 	Fixed the relative, non-intrusive case (I forgot we went to
 	chdiring all over the shop)

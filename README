@@ -1,4 +1,4 @@
-README for Module::Depends 0.07
+README for Module::Depends 0.08
 
 =head1 NAME
 
@@ -36,6 +36,12 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.08 Thursday 21st April, 2005
+
+	Make use of Cwd::realpath to normalise paths with relative 
+	components in them. (Tom Insam)
+
+
 =item 0.07 Friday 18th February, 2005
 
 	Fixed the relative, non-intrusive case (I forgot we went to
@@ -45,11 +51,6 @@ What changed over the last 3 revisions
 =item 0.06 Tuesday 14th September, 2004
 
 	Rewrote source code example in synopsis so it works
-
-
-=item 0.05 Thursday 17th June, 2004
-
-	Dummy out Inline::MakeMaker too
 
 =back
 
