@@ -1,6 +1,6 @@
 #!perl -w
 use strict;
-use Test::More tests => 13;
+use Test::More tests => 16;
 my $class = 'Module::Depends::Intrusive';
 require_ok( "Module::Depends" );
 require_ok( $class );
@@ -51,10 +51,18 @@ my $distant = Module::Depends->new->dist_dir( 't/with-yaml' )->find_modules;
 is_deeply( $distant->requires, $our_requires,
            "got our own requires, non-intrusively, from a distance" );
 
-
-
 my $inline_mm = $class->new->dist_dir('t/inline-makemaker')->find_modules;
 is_deeply( $inline_mm->requires,
            { 'Inline::C' => '0.44',
              'Time::Piece' => '1.08' },
            "use Inline::MakeMaker; no longer trips us up" );
+
+my $module_install = $class->new->dist_dir('t/module-install')->find_modules;
+is( $module_install->error, '', "Module::Install no go boom" );
+is_deeply( $module_install->build_requires,
+           { 'Test::More' => '0.54' },
+           "Module::Install build_requires" );
+
+is_deeply( $module_install->requires,
+           { 'perl' => '5.5.3' },
+           "Module::Install requires" );

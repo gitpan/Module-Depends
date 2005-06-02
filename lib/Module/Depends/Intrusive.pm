@@ -44,6 +44,7 @@ sub _find_modules {
     local *main::WriteMakefile;
     local *ExtUtils::MakeMaker::WriteMakefile = $WriteMakefile;
 
+    # Inline::MakeMaker
     local $INC{"Inline/MakeMaker.pm"} = 1;
 
     local @Inline::MakeMaker::EXPORT = qw( WriteMakefile WriteInlineMakefile );
@@ -51,6 +52,21 @@ sub _find_modules {
     local *Inline::MakeMaker::WriteMakefile = $WriteMakefile;
     local *Inline::MakeMaker::WriteInlineMakefile = $WriteMakefile;
 
+    # Module::Install
+    local $INC{"inc/Module/Install.pm"} = 1;
+    local @inc::Module::Install::ISA = qw( Exporter );
+    local @inc::Module::Install::EXPORT = qw( AUTOLOAD requires build_requires );
+    local *inc::Module::Install::AUTOLOAD = sub { 1 };
+    local *inc::Module::Install::requires = sub {
+        my ($module, $version) = @_;
+        $version ||= 0;
+        $self->requires->{$module} = $version;
+    };
+    local *inc::Module::Install::build_requires = sub {
+        my ($module, $version) = @_;
+        $version ||= 0;
+        $self->build_requires->{$module} = $version;
+    };
 
     my $file = File::Spec->catfile( getcwd(), $pl );
     eval {

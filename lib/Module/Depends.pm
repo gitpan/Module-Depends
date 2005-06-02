@@ -5,7 +5,7 @@ use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
 use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 =head1 NAME
 

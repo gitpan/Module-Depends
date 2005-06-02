@@ -1,3 +1,6 @@
+0.09 Thursday 2nd June, 2005
+	Dummy out that pesky inc::Module::Install
+
 0.08 Thursday 21st April, 2005
 	Make use of Cwd::realpath to normalise paths with relative 
 	components in them. (Tom Insam)

@@ -1,4 +1,4 @@
-README for Module::Depends 0.08
+README for Module::Depends 0.09
 
 =head1 NAME
 
@@ -36,6 +36,11 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.09 Thursday 2nd June, 2005
+
+	Dummy out that pesky inc::Module::Install
+
+
 =item 0.08 Thursday 21st April, 2005
 
 	Make use of Cwd::realpath to normalise paths with relative 
@@ -46,11 +51,6 @@ What changed over the last 3 revisions
 
 	Fixed the relative, non-intrusive case (I forgot we went to
 	chdiring all over the shop)
-
-
-=item 0.06 Tuesday 14th September, 2004
-
-	Rewrote source code example in synopsis so it works
 
 =back
 
