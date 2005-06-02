@@ -1,3 +1,6 @@
+0.10 Thursday 2nd June, 2005
+	Ship the file for the test suite.  Doh.
+
 0.09 Thursday 2nd June, 2005
 	Dummy out that pesky inc::Module::Install
 

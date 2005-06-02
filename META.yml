@@ -1,6 +1,6 @@
 ---
 name: Module-Depends
-version: 0.09
+version: 0.10
 author: ~
 abstract: identify the dependencies of a distribution
 license: perl
@@ -14,7 +14,7 @@ build_requires:
 provides:
   Module::Depends:
     file: lib/Module/Depends.pm
-    version: 0.09
+    version: 0.10
   Module::Depends::Intrusive:
     file: lib/Module/Depends/Intrusive.pm
   Module::Depends::Intrusive::Fake::Module::Build:

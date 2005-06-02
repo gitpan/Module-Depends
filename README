@@ -1,4 +1,4 @@
-README for Module::Depends 0.09
+README for Module::Depends 0.10
 
 =head1 NAME
 
@@ -36,6 +36,11 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.10 Thursday 2nd June, 2005
+
+	Ship the file for the test suite.  Doh.
+
+
 =item 0.09 Thursday 2nd June, 2005
 
 	Dummy out that pesky inc::Module::Install
@@ -45,12 +50,6 @@ What changed over the last 3 revisions
 
 	Make use of Cwd::realpath to normalise paths with relative 
 	components in them. (Tom Insam)
-
-
-=item 0.07 Friday 18th February, 2005
-
-	Fixed the relative, non-intrusive case (I forgot we went to
-	chdiring all over the shop)
 
 =back
 
