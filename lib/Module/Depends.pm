@@ -5,7 +5,7 @@ use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
 use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 =head1 NAME
 
@@ -114,7 +114,7 @@ originally by James Duncan and Arthur Bergman.
 
 =head1 COPYRIGHT
 
-Copyright 2004 Fotango.  All Rights Reserved.
+Copyright 2004,2007 Fotango.  All Rights Reserved.
 
 This module is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.

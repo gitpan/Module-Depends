@@ -26,6 +26,7 @@ sub _find_modules {
     };
     local *CORE::GLOBAL::exit = sub { };
     local $INC{"Module/Build.pm"} = 1;
+    local @MyModuleBuilder::ISA = qw( Module::Build );
     local *Module::Build::new = sub {
         my $class = shift;
         my %args =  @_;
@@ -55,17 +56,23 @@ sub _find_modules {
     # Module::Install
     local $INC{"inc/Module/Install.pm"} = 1;
     local @inc::Module::Install::ISA = qw( Exporter );
-    local @inc::Module::Install::EXPORT = qw( AUTOLOAD requires build_requires );
+    local @inc::Module::Install::EXPORT = qw(
+
+      all_from auto_install AUTOLOAD build_requires check_nmake include
+      include_deps installdirs Makefile makemaker_args Meta name no_index
+      requires WriteAll clean_files can_cc sign cc_inc_paths cc_files
+      cc_optimize_flags author license
+
+    );
     local *inc::Module::Install::AUTOLOAD = sub { 1 };
     local *inc::Module::Install::requires = sub {
-        my ($module, $version) = @_;
-        $version ||= 0;
-        $self->requires->{$module} = $version;
+        my %deps = (@_ == 1 ? ( $_[0] => 0 ) : @_);
+        $self->requires->{ $_ } = $deps{ $_ } for keys %deps;
     };
+    local *inc::Module::Install::include_deps = *inc::Module::Install::requires;
     local *inc::Module::Install::build_requires = sub {
-        my ($module, $version) = @_;
-        $version ||= 0;
-        $self->build_requires->{$module} = $version;
+        my %deps = (@_ == 1 ? ( $_[0] => 0 ) : @_);
+        $self->build_requires->{ $_ } = $deps{ $_ } for keys %deps;
     };
 
     my $file = File::Spec->catfile( getcwd(), $pl );

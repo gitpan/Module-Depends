@@ -1,12 +1,11 @@
-#!perl -w
+#!perl
 use strict;
-use Test::More tests => 16;
+use warnings;
+use Test::More tests => 17;
 my $class = 'Module::Depends::Intrusive';
 require_ok( "Module::Depends" );
 require_ok( $class );
 
-# when you edit Build.PL, edit this, then rerun
-# perl Build.PL ; ./Build distmeta
 my $our_requires = {
     'Class::Accessor::Chained' => 0,
     'File::chdir' => 0,
@@ -15,7 +14,7 @@ my $our_requires = {
 };
 
 # test against ourself
-my $mb = $class->new->dist_dir( '.' )->find_modules;
+my $mb = $class->new->dist_dir( 't/old' )->find_modules;
 is( $mb->error, '' );
 isa_ok( $mb, $class );
 
@@ -43,7 +42,10 @@ is_deeply( $versioned->requires,
              'Term::ReadKey'      => '2.14' },
            "use Module::Build VERSION; no longer trips us up" );
 
+### gah, it seems File::chdir's localisation doesn't nest, otherwise we could use that here
+chdir 't/old';
 my $shy = Module::Depends->new->dist_dir( '.' )->find_modules;
+chdir '../..';
 is_deeply( $shy->requires, $our_requires,
            "got our own requires, non-intrusively" );
 
@@ -66,3 +68,9 @@ is_deeply( $module_install->build_requires,
 is_deeply( $module_install->requires,
            { 'perl' => '5.5.3' },
            "Module::Install requires" );
+
+my $template_extract = $class->new->dist_dir('t/template-extract')->find_modules;
+is_deeply( $template_extract->requires,
+           { 'perl' => '5.006',
+             'Template' => 2 },
+           "Template::Extract Module::Install requires" );

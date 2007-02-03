@@ -1,4 +1,4 @@
-README for Module::Depends 0.10
+README for Module::Depends 0.11
 
 =head1 NAME
 
@@ -36,6 +36,14 @@ What changed over the last 3 revisions
 
 =over
 
+=item 0.11 Saturday 3rd February, 2007
+
+	Fixed the emulation of Module::Install::require
+	Change the base test case so that it doesn't need a 
+        ./Build dist first (for when building out of SVN rather 
+       than a released dist)
+
+
 =item 0.10 Thursday 2nd June, 2005
 
 	Ship the file for the test suite.  Doh.
@@ -44,12 +52,6 @@ What changed over the last 3 revisions
 =item 0.09 Thursday 2nd June, 2005
 
 	Dummy out that pesky inc::Module::Install
-
-
-=item 0.08 Thursday 21st April, 2005
-
-	Make use of Cwd::realpath to normalise paths with relative 
-	components in them. (Tom Insam)
 
 =back
 
@@ -60,7 +62,7 @@ originally by James Duncan and Arthur Bergman.
 
 =head1 COPYRIGHT
 
-Copyright 2004 Fotango.  All Rights Reserved.
+Copyright 2004,2007 Fotango.  All Rights Reserved.
 
 This module is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
