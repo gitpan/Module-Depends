@@ -1,10 +1,7 @@
 ---
 name: Module-Depends
-version: 0.11
-author:
-  - |-
-    Richard Clamp, based on code extracted from the Fotango build system
-    originally by James Duncan and Arthur Bergman.
+version: 0.12
+author: ~
 abstract: identify the dependencies of a distribution
 license: perl
 requires:
@@ -17,11 +14,11 @@ build_requires:
 provides:
   Module::Depends:
     file: lib/Module/Depends.pm
-    version: 0.11
+    version: 0.12
   Module::Depends::Intrusive:
     file: lib/Module/Depends/Intrusive.pm
   Module::Depends::Intrusive::Fake::Module::Build:
     file: lib/Module/Depends/Intrusive.pm
   main:
     file: lib/Module/Depends/Intrusive.pm
-generated_by: Module::Build version 0.25
+generated_by: Module::Build version 0.2611

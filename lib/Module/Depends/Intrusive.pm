@@ -90,6 +90,12 @@ sub _find_modules {
 package Module::Depends::Intrusive::Fake::Module::Build;
 sub DESTROY {}
 sub AUTOLOAD { shift }
+sub y_n {
+    my ($self, $question, $default) = @_;
+    $default ||= 'n';
+    return 1 if lc $default eq 'y';
+    return 0; # ok, we may say no when yes was intended, but we can't hang
+}
 
 1;
 

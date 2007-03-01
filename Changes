@@ -1,3 +1,6 @@
+0.12 Thursday 1st March, 2007
+	Implement a y_n for the Module::Build fakery
+
 0.11 Saturday 3rd February, 2007
 	Fixed the emulation of Module::Install::require
 	Change the base test case so that it doesn't need a 

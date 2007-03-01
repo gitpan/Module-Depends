@@ -2,16 +2,16 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
+          'PL_FILES' => {},
+          'INSTALLDIRS' => 'site',
           'NAME' => 'Module::Depends',
           'VERSION_FROM' => 'lib/Module/Depends.pm',
           'PREREQ_PM' => {
-                           'Class::Accessor::Chained' => '0',
-                           'File::Spec' => '0',
-                           'File::chdir' => '0',
-                           'Test::More' => '0',
-                           'YAML' => '0'
-                         },
-          'INSTALLDIRS' => 'site',
-          'PL_FILES' => {}
+                           'Test::More' => 0,
+                           'YAML' => 0,
+                           'Class::Accessor::Chained' => 0,
+                           'File::Spec' => 0,
+                           'File::chdir' => 0
+                         }
         )
 ;
