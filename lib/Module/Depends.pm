@@ -3,9 +3,8 @@ package Module::Depends;
 use YAML qw( LoadFile );
 use Cwd qw( getcwd );
 use base qw( Class::Accessor::Chained );
-use File::chdir;
 __PACKAGE__->mk_accessors(qw( dist_dir debug libs requires build_requires error ));
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 =head1 NAME
 
@@ -60,13 +59,15 @@ scan the C<dist_dir> to populate C<libs>, C<requires>, and C<build_requires>
 sub find_modules {
     my $self = shift;
 
-    my $going_to = Cwd::realpath(
-      File::Spec->rel2abs( $self->dist_dir ) );
-
-    local $CWD = $going_to;
-    $CWD eq $going_to
-     ? $self->_find_modules
-     : $self->error( "couldn't chdir to " . $self->dist_dir . ": $!" );
+    my $here = getcwd;
+    unless (chdir $self->dist_dir) {
+        $self->error( "couldn't chdir to " . $self->dist_dir . ": $!" );
+        return $self; 
+    }
+    eval { $self->_find_modules };
+    chdir $here;
+    die $@ if $@;
+    
     return $self;
 }
 

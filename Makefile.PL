@@ -5,13 +5,13 @@ WriteMakefile
           'PL_FILES' => {},
           'INSTALLDIRS' => 'site',
           'NAME' => 'Module::Depends',
+          'EXE_FILES' => [],
           'VERSION_FROM' => 'lib/Module/Depends.pm',
           'PREREQ_PM' => {
                            'Test::More' => 0,
                            'YAML' => 0,
                            'Class::Accessor::Chained' => 0,
-                           'File::Spec' => 0,
-                           'File::chdir' => 0
+                           'File::Spec' => 0
                          }
         )
 ;

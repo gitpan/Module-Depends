@@ -9,7 +9,6 @@ Module::Build->new(
     },
     requires => {
         'YAML' => 0,
-        'File::chdir' => 0,
         'File::Spec'  => 0,
         'Class::Accessor::Chained' => 0,
     },
